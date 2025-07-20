@@ -1,0 +1,14 @@
+name: input_artifact
+conda_env: conda.yml
+
+entry_points:
+  main:
+    parameters:
+
+      10:
+        description: ## ADD DESCRIPTION
+        type: string
+
+
+    command: >-
+        python output_artifact  --10 {10} 

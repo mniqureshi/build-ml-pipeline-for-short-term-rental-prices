@@ -9,6 +9,7 @@ import shutil
 import matplotlib.pyplot as plt
 
 import mlflow
+from mlflow.models import infer_signature
 import json
 
 import pandas as pd
@@ -99,15 +100,14 @@ def go(args):
     # Save the sk_pipe pipeline as a mlflow.sklearn model in the directory "random_forest_dir"
     # HINT: use mlflow.sklearn.save_model
     # YOUR CODE HERE
+    rf_storage_dir = 'random_forest_dir'
     signature = infer_signature(X_val, y_pred)
-    export_path = "random_forest_dir"
-
     mlflow.sklearn.save_model(
-        sk_pipe,
-        export_path,
+        sk_model = sk_pipe,
+        path = rf_storage_dir,
         serialization_format=mlflow.sklearn.SERIALIZATION_FORMAT_CLOUDPICKLE,
-        signature=signature,
-        input_example=X_val.iloc[:2],
+        signature = signature,
+        input_example = X_val.iloc[:15]  # add first 15 rows with slice object
     )
 
     ######################################
@@ -122,7 +122,7 @@ def go(args):
     artifact = wandb.Artifact(
         args.output_artifact,
         type="model_export",
-        description="Random Forest pipeline export",
+        description="Random Forest export",
         metadata=rf_config
 
     )
