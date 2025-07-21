@@ -37,9 +37,7 @@ def go(args):
 
     # fix of the "test_proper_boundaries" test
     # drop rows in the dataset that are not in the proper geolocation (i.e. drop records outside of the area of NYC)
-    # refer to images/geolocation-fix-visual-explanation for a visual explanation
-    idx = df["longitude"].between(-74.25, -73.50) & df["latitude"].between(40.5, 41.2)
-    df = df[idx].copy()
+
 
     logger.info("Exporting clean data as CSV ...")
     clean_data_file_name = "clean_sample.csv"
